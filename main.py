@@ -118,11 +118,14 @@ pareto_in, pareto_fitness = mopso_.done(cycle_)
 path_fitness = "./output/pareto_fitness_" + args.name + ".txt"
 path_in = "./output/pareto_in_" + args.name + ".txt"
 
-if not os.path.exists("./output"):
-    os.makedirs("./output")
-    print(f"Folder '{'./output'}' created successfully.")
-
-np.savetxt(path_in, pareto_in)  
+if args.type == 'ti':
+    fp = open(path_in,'w+')
+    for solution in (pareto_in):
+        result = ' '.join([str(elem) for elem in [int(round(solution[2] * 74)),2 * solution[0],int(round(solution[3] * 74)),2 * solution[0],int(round(solution[4] * 74)),-2 * solution[1],int(round(solution[5] * 74)),-2 * solution[1]]])
+        fp.write(result)
+    fp.close()
+else: 
+    np.savetxt(path_in, pareto_in) 
 np.savetxt(path_fitness, pareto_fitness)  
 print("\n", "pareto_position:" + path_in)
 print("pareto_value:" + path_fitness)
