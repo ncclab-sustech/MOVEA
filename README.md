@@ -24,7 +24,7 @@ The output files are located in the "Output" folder. The "fitness" file contains
 Here is an example command to optimize the motor area for the HCP4 head model using the tTIS stimulation method:
 ```bash
 python main.py -t ti -m hcp4 -p motor
-
+```
 You will get two files in the "Output" folder. In the first line of the "fitness" file, you may see values such as 1.972386587771203 1.819407772791436506e-01, which represent the two objectives defined in util.py. In the first line of the "in" file, you may see values such as 46 1.0 2 -1.0 74 1.0 23 -1.0, indicating that the Cp2 channel (47th row in "hcp4.csv") injects 1 mA and so on. For HD-based methods, the currents for all channels are displayed.
 
 ###Citation
