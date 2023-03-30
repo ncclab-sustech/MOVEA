@@ -31,4 +31,4 @@ You will get two files in the "Output" folder. In the first line of the "fitness
 If you find this code useful for your research, please consider citing the following paper: https://doi.org/10.48550/arXiv.2211.05658
 
 ### Contact
-For any questions or issues related to this implementation, please contact the authors
+We provide some results from the paper in 'others', for any questions or issues related to this implementation, please contact the authors.
