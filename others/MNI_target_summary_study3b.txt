@@ -1,0 +1,50 @@
+Optimization set-up
+===========================
+Leadfield file: C:\project\optimizaton_tes\hcp4\hcp4_leadfield_EEG10-10_UI_Jurak_2007.hdf5
+Max. total current: 0.002 (A)
+Max. individual current: 0.001 (A)
+Max. active electrodes: None
+Name: optimization/MNI_target
+----------------------
+N targets: 1
+Target 1:
+positions: [  7.408  -16.7799   4.2095]
+indexes: None
+directions: None
+radius: 10
+intensity: 0.31
+max_angle: None
+tissues: None
+----------------------
+N avoid: 1
+Avoid 1:
+positions: [ 40.0443 -13.7023  43.0677]
+indexes: None
+radius: 10
+weight: 1.0e+06
+tissues: None
+
+
+Optimization Summary
+=============================
+Total current: 2.00e-03 (A)
+Maximum current: 1.00e-03 (A)
+Active electrodes: 76
+Field Summary
+----------------------------
+Peak Value (99.9 percentile): 0.95 (V/m)
+Mean field norm: 2.83e-01 (V/m)
+Focality: 50%: 5.43e+04 70%: 9.13e+03 (mm3)
+Target 1
+    Intensity specified:0.31 achieved: 0.30 (V/m)
+    Average angle across target: nan (degrees)
+Avoid 1
+    Mean field norm in region: 2.41e-01 (V/m)
+
+
+=====================================
+SimNIBS finished running optimization
+Mesh file: optimization/MNI_target.msh
+CSV file: optimization/MNI_target.csv
+Summary file: optimization/MNI_target_summary.txt
+=====================================
