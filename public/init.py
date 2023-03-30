@@ -35,7 +35,7 @@ def init_designparams(particals,in_min,in_max):
         solution[glo.prior[3]+75] = -1
         print(solution)
         solution=np.repeat([solution], 5, axis=0)
-        in_temp = np.random.uniform(-10, 10, (particals-5, in_dim))
+        in_temp = np.random.uniform(-9, 9, (particals-5, in_dim))
         in_temp[-1 > in_temp] = 0
         in_temp[in_temp > 1] = 0
         in_temp = np.vstack([in_temp,solution])
