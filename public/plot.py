@@ -19,6 +19,8 @@ class Plot_pareto:
         plt.xlabel("TARGET1_Electric_Field(V/m)", fontdict={'size': 16})
         plt.ylabel("TARGET2_Electric_Field(V/m)", fontdict={'size': 16})
         plt.scatter(1/archive_fitness[:, 0], archive_fitness[:, 1], s=30, c='black', marker=".", alpha=1.0, label='MOPSO')
+        if not os.path.exists('./pic/'):
+            os.mkdir('./pic/')
         plt.savefig('./pic/'+str(i)+'_result.png')
 
         # 3 objections
