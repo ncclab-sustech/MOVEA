@@ -18,7 +18,7 @@ To get started, you can run the `main.py` script with the following command-line
 The input consists of two parts: the lead field matrix file and the voxel position file. These files are used to calculate the electric field and to determine the voxel indices corresponding to MNI coordinates. You can create these files yourself or get them from an h5py file in the output folder of SimNIBS by running convert.ipynb. In this repository, we provide files for the HCP4 head model from the Human Connectome Project (HCP) dataset.
 
 ### Output
-The output files are located in the "Output" folder. The "fitness" file contains the results of the objectives, and the "in" file contains information about the montage and current. Each line represents a solution. The relationship between array indices and activated channels is specified in the "hcp4.csv" file. Note that the Cz channel is not included.
+The output files are located in the "Output" folder and 'pic' folder. The "fitness" file contains the results of the objectives, and the "in" file contains information about the montage and current. Each line represents a solution. The relationship between array indices and activated channels is specified in the "hcp4.csv" file. Note that the Cz channel is not included.
 
 ### Example Command
 Here is an example command to optimize the motor area for the HCP4 head model using the tTIS stimulation method:
