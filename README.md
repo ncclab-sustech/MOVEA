@@ -14,10 +14,10 @@ To get started, you can run the `main.py` script with the following command-line
 - `-p`: Target name or MNI coordinate (e.g., motor)
 - `-g`: Maximum epochs (default: 100)
 
-You have the flexibility to customize the pool size in P_objective according to your device's specifications, facilitating a more expedited optimization process.
+You can customize the pool size in P_objective according to your device's specifications, facilitating a more expedited optimization process.
 
 ### Input Data
-The input consists of two parts: the lead field matrix file and the voxel position file. These files are used to calculate the electric field and to determine the voxel indices corresponding to MNI coordinates. You can create these files yourself or get them from an h5py file in the output folder of SimNIBS ([tdcsleadfield](https://simnibs.github.io/simnibs/build/html/documentation/sim_struct/tdcsleadfield.html#tdcsleadfield)) by running convert.ipynb. In this repository, we provide files for the HCP4 head model from the Human Connectome Project (HCP) dataset. Due to constraints related to the permissible file upload size, only a segment of the LFM for the EEG 10-10 is uploaded. You can adjust the configuration of number of available channels by modifying the NUM_ELE parameter in glo.py.
+The input consists of two parts: the lead field matrix file and the voxel position file. These files are used to calculate the electric field and to determine the voxel indices corresponding to MNI coordinates. You can create these files yourself or get them from an h5py file in the output folder of SimNIBS ([tdcsleadfield](https://simnibs.github.io/simnibs/build/html/documentation/sim_struct/tdcsleadfield.html#tdcsleadfield)) by running convert.ipynb. In this repository, we provide files for the HCP4 head model from the Human Connectome Project (HCP) dataset. Due to constraints related to the permissible file upload size, only a segment of the LFM for the EEG 10-10 is uploaded. You can adjust the number of channels to suit your specific data and electrode layout by altering the NUM_ELE parameter found in glo.py.
 
 ### Output
 The output files are located in the "Output" folder and 'pic' folder. The "fitness" file contains the results of the objectives, and the "in" file contains information about the montage and current. Each line represents a solution. The relationship between array indices and activated channels is specified in the "hcp4.csv" file. Note that the Cz channel is not included.
