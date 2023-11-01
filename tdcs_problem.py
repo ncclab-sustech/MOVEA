@@ -10,7 +10,7 @@ class MyProblem(ea.Problem):
         name = 'MyProblem'  
         M = 1  
         maxormins = [1]  
-        self.var_set = np.arange(0,75,1) 
+        self.var_set = np.arange(0,NUM_ELE,1) 
         Dim = 4  
         varTypes = [1] * Dim  
         lb = [0, 0,0,0]  
@@ -40,7 +40,7 @@ class MyProblem(ea.Problem):
             lst = [int(x1[i]),int(x2[i]),int(x3[i]),int(x4[i])]
             set_lst = set(lst)
             if len(set_lst) == len(lst):
-                x = np.zeros(75)
+                x = np.zeros(NUM_ELE)
                 x[x1[i]] = 1
                 x[x2[i]] = 1
                 x[x3[i]] = -1
