@@ -5,7 +5,7 @@ import argparse
 from public import glo
 import numpy as np
 
-
+NUM_ELE = glo.NUM_ELE
 
 def argdet():
  if len(sys.argv) <= 9:
@@ -121,7 +121,7 @@ path_in = "./output/pareto_in_" + args.name + ".txt"
 if args.type == 'ti':
     fp = open(path_in,'w+')
     for solution in (pareto_in):
-        result = ' '.join([str(elem) for elem in [int(round(solution[2] * 74)),2 * solution[0],int(round(solution[3] * 74)),2 * solution[0],int(round(solution[4] * 74)),-2 * solution[1],int(round(solution[5] * 74)),-2 * solution[1]]])
+        result = ' '.join([str(elem) for elem in [int(round(solution[2] * (NUM_ELE-1))),2 * solution[0],int(round(solution[3] * (NUM_ELE-1))),2 * solution[0],int(round(solution[4] * (NUM_ELE-1))),-2 * solution[1],int(round(solution[5] * (NUM_ELE-1))),-2 * solution[1]]])
         fp.write(result)
     fp.close()
 else: 
