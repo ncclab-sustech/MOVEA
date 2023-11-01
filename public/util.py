@@ -3,7 +3,8 @@ import math
 from public import glo
 
 inf = 9999999999
-NUM_ELE = 75
+NUM_ELE = glo.NUM_ELE
+
 POINT_NUM = 1000
 
 
@@ -74,16 +75,16 @@ def tis_function5(x1, x2, x3, x4,x5):
     electrode1 = x1
     electrode2 = x2
     stimulation1 = np.zeros(NUM_ELE)
-    stimulation1[electrode1] = 1 + x5/75
-    stimulation1[electrode2] = -1 - x5/75
+    stimulation1[electrode1] = 1 + x5/NUM_ELE
+    stimulation1[electrode2] = -1 - x5/NUM_ELE
     e1 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation1), np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation1),np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation1)]).T /1000
 
     electrode3 = x3
     electrode4 = x4
     stimulation2 = np.zeros(NUM_ELE)
 
-    stimulation2[electrode3] = 1 - x5/75
-    stimulation2[electrode4] = -1 + x5/75
+    stimulation2[electrode3] = 1 - x5/NUM_ELE
+    stimulation2[electrode4] = -1 + x5/NUM_ELE
     e2 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation2), np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation2),np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation2)]).T / 1000
     eam = envelop(e1,e2)
     return 1/np.mean(abs(eam)) 
@@ -100,15 +101,15 @@ def tis_constraint6(x):
 
 def tis_function6(x):
 
-    electrode1 = int(round(x[2] * 74))
-    electrode2 = int(round(x[3] * 74))
+    electrode1 = int(round(x[2] * (NUM_ELE-1)))
+    electrode2 = int(round(x[3] * (NUM_ELE-1)))
     stimulation1 = np.zeros(NUM_ELE)
     stimulation1[electrode1] = 2 * x[0]
     stimulation1[electrode2] = -(2 * x[0])
     e1 = np.array([np.matmul(lfm[:, :, 0].T, stimulation1), np.matmul(lfm[:, :, 1].T, stimulation1),np.matmul(lfm[:, :, 2].T, stimulation1)]).T /1000
 
-    electrode3 = int(round(x[4] * 74))
-    electrode4 = int(round(x[5] * 74))
+    electrode3 = int(round(x[4] * (NUM_ELE-1)))
+    electrode4 = int(round(x[5] * (NUM_ELE-1)))
     stimulation2 = np.zeros(NUM_ELE)
 
     stimulation2[electrode3] = 2 * x[1]
@@ -122,14 +123,14 @@ def tis_function6(x):
 # for avoidance
 def tis_function6_t(x):
 
-    electrode1 = int(round(x[2] * 74))
-    electrode2 = int(round(x[3] * 74))
+    electrode1 = int(round(x[2] * (NUM_ELE-1)))
+    electrode2 = int(round(x[3] * (NUM_ELE-1)))
     stimulation1 = np.zeros(NUM_ELE)
     stimulation1[electrode1] = 2 * x[0]
     stimulation1[electrode2] = -(2 * x[0])
     e1 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation1), np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation1),np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation1)]).T /1000
-    electrode3 = int(round(x[4] * 74))
-    electrode4 = int(round(x[5] * 74))
+    electrode3 = int(round(x[4] * (NUM_ELE-1)))
+    electrode4 = int(round(x[5] * (NUM_ELE-1)))
     stimulation2 = np.zeros(NUM_ELE)
     stimulation2[electrode3] = 2 * x[1]
     stimulation2[electrode4] = -(2 * x[1])
@@ -137,15 +138,15 @@ def tis_function6_t(x):
     target = envelop(e1,e2)
      
 
-    electrode1 = int(round(x[2] * 74))
-    electrode2 = int(round(x[3] * 74))
+    electrode1 = int(round(x[2] * (NUM_ELE-1)))
+    electrode2 = int(round(x[3] * (NUM_ELE-1)))
     stimulation1 = np.zeros(NUM_ELE)
     stimulation1[electrode1] = 2 * x[0]
     stimulation1[electrode2] = -(2 * x[0])
     e1 = np.array([np.matmul(lfm[:, AVOID_POSITION, 0].T, stimulation1), np.matmul(lfm[:, AVOID_POSITION, 1].T, stimulation1),np.matmul(lfm[:, AVOID_POSITION, 2].T, stimulation1)]).T /1000
 
-    electrode3 = int(round(x[4] * 74))
-    electrode4 = int(round(x[5] * 74))
+    electrode3 = int(round(x[4] * (NUM_ELE-1)))
+    electrode4 = int(round(x[5] * (NUM_ELE-1)))
  
     stimulation2 = np.zeros(NUM_ELE)
 
@@ -160,19 +161,19 @@ def tis_function6_t(x):
 def mti(x):
         x = x/2
         x[np.where(abs(x)<0.01)] = 0
-        e1 = np.array([np.matmul(lfm[:, :, 0].T, x[:75]), np.matmul(lfm[:, :, 1].T, x[:75]),np.matmul(lfm[:, :, 2].T, x[:75])]).T /1000
-        e2 = np.array([np.matmul(lfm[:, :, 0].T, x[75:]), np.matmul(lfm[:, :, 1].T, x[75:]),np.matmul(lfm[:, :, 2].T, x[75:])]).T /1000
+        e1 = np.array([np.matmul(lfm[:, :, 0].T, x[:NUM_ELE]), np.matmul(lfm[:, :, 1].T, x[:NUM_ELE]),np.matmul(lfm[:, :, 2].T, x[:NUM_ELE])]).T /1000
+        e2 = np.array([np.matmul(lfm[:, :, 0].T, x[NUM_ELE:]), np.matmul(lfm[:, :, 1].T, x[NUM_ELE:]),np.matmul(lfm[:, :, 2].T, x[NUM_ELE:])]).T /1000
         eam = envelop(e1,e2)
         return np.array([1/np.mean(eam[TARGET_POSITION]),np.mean(eam)])
 
 def mti_avoid(x):
         x = x/2
         x[np.where(abs(x)<0.01)] = 0
-        e1 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, x[:75]), np.matmul(lfm[:, TARGET_POSITION, 1].T, x[:75]),np.matmul(lfm[:, TARGET_POSITION, 2].T, x[:75])]).T /1000
-        e2 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, x[75:]), np.matmul(lfm[:, TARGET_POSITION, 1].T, x[75:]),np.matmul(lfm[:, TARGET_POSITION, 2].T, x[75:])]).T /1000
+        e1 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, x[:NUM_ELE]), np.matmul(lfm[:, TARGET_POSITION, 1].T, x[:NUM_ELE]),np.matmul(lfm[:, TARGET_POSITION, 2].T, x[:NUM_ELE])]).T /1000
+        e2 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, x[NUM_ELE:]), np.matmul(lfm[:, TARGET_POSITION, 1].T, x[NUM_ELE:]),np.matmul(lfm[:, TARGET_POSITION, 2].T, x[NUM_ELE:])]).T /1000
         field1 = envelop(e1,e2)
-        e1 = np.array([np.matmul(lfm[:, AVOID_POSITION, 0].T, x[:75]), np.matmul(lfm[:, AVOID_POSITION, 1].T, x[:75]),np.matmul(lfm[:, AVOID_POSITION, 2].T, x[:75])]).T /1000
-        e2 = np.array([np.matmul(lfm[:, AVOID_POSITION, 0].T, x[75:]), np.matmul(lfm[:, AVOID_POSITION, 1].T, x[75:]),np.matmul(lfm[:, AVOID_POSITION, 2].T, x[75:])]).T /1000
+        e1 = np.array([np.matmul(lfm[:, AVOID_POSITION, 0].T, x[:NUM_ELE]), np.matmul(lfm[:, AVOID_POSITION, 1].T, x[:NUM_ELE]),np.matmul(lfm[:, AVOID_POSITION, 2].T, x[:NUM_ELE])]).T /1000
+        e2 = np.array([np.matmul(lfm[:, AVOID_POSITION, 0].T, x[NUM_ELE:]), np.matmul(lfm[:, AVOID_POSITION, 1].T, x[NUM_ELE:]),np.matmul(lfm[:, AVOID_POSITION, 2].T, x[NUM_ELE:])]).T /1000
         field2 = envelop(e1,e2)
         return np.array([1/np.mean(field1),np.mean(field2)])
 
@@ -225,8 +226,8 @@ def h_mti(x):
     x = x/2
     x = np.array(x)
     x[abs(x) < 0.01] = 0
-    result1 = np.sum(abs(x[:75])) + abs(np.sum(x[:75]))  # without reference
-    result2 = np.sum(abs(x[75:])) + abs(np.sum(x[75:]))
+    result1 = np.sum(abs(x[:NUM_ELE])) + abs(np.sum(x[:NUM_ELE]))  # without reference
+    result2 = np.sum(abs(x[NUM_ELE:])) + abs(np.sum(x[NUM_ELE:]))
     if result1 <= 2 and result2 <= 2:
         return 0
     else:
