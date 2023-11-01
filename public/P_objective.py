@@ -4,7 +4,7 @@ from public.util import tis_constraint6,tis_function6,mti,h_tdcs,mti_avoid,h_mti
 import multiprocessing
 
 
-
+NUM_ELE = glo.NUM_ELE
 def fun_(x):
     if glo.type == 'ti':
         if tis_constraint6(x):  
@@ -65,9 +65,9 @@ def TES(Operation,Problem,M,Input,epoch):
         Boundary = []
         Coding = ""
         if Operation == "init":
-            MaxValue = np.ones((1, 150))
-            MinValue = -np.ones((1, 150))
-            Population = np.random.uniform(-1, 1, size=(Input, 150))
+            MaxValue = np.ones((1, (NUM_ELE*2)))
+            MinValue = -np.ones((1, (NUM_ELE*2)))
+            Population = np.random.uniform(-1, 1, size=(Input, (NUM_ELE*2)))
             Boundary = np.vstack((MaxValue, MinValue))
             Coding = "Real"
             return Population, Boundary, Coding
@@ -83,9 +83,9 @@ def TES(Operation,Problem,M,Input,epoch):
         Boundary = []
         Coding = ""
         if Operation == "init":
-            MaxValue = np.ones((1, 75))
-            MinValue = -np.ones((1, 75))
-            Population = np.random.uniform(-1, 1, size=(Input, 75))
+            MaxValue = np.ones((1, NUM_ELE))
+            MinValue = -np.ones((1, NUM_ELE))
+            Population = np.random.uniform(-1, 1, size=(Input, NUM_ELE))
             Boundary = np.vstack((MaxValue, MinValue))
             Coding = "Real"
             return Population, Boundary, Coding
