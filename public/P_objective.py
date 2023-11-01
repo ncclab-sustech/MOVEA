@@ -5,6 +5,7 @@ import multiprocessing
 
 
 NUM_ELE = glo.NUM_ELE
+Pool_size = 1
 def fun_(x):
     if glo.type == 'ti':
         if tis_constraint6(x):  
@@ -57,7 +58,7 @@ def TES(Operation,Problem,M,Input,epoch):
             Population = Input
             FunctionValue = np.zeros((Population.shape[0], M))
             if Problem == "TEScv2":
-                p = multiprocessing.Pool(20)
+                p = multiprocessing.Pool(Pool_size)
                 FunctionValue = np.array(p.map(fun_, Population))
                 p.close()
                 p.join()
@@ -75,7 +76,7 @@ def TES(Operation,Problem,M,Input,epoch):
             Population = Input
             FunctionValue = np.zeros((Population.shape[0], M))
             if Problem == "TEScv2":
-                p = multiprocessing.Pool(100)
+                p = multiprocessing.Pool(Pool_size)
                 FunctionValue = np.array(p.map(fun_, Population))
                 p.close()
                 p.join()
@@ -93,7 +94,7 @@ def TES(Operation,Problem,M,Input,epoch):
             Population = Input
             FunctionValue = np.zeros((Population.shape[0], M))
             if Problem == "TEScv2":
-                p = multiprocessing.Pool(1)
+                p = multiprocessing.Pool(Pool_size)
                 FunctionValue = np.array(p.map(fun_, Population))
                 p.close()
                 p.join()
