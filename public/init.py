@@ -3,16 +3,18 @@ import random
 import numpy as np
 from public import pareto,NDsort,glo
 
+NUM_ELE = glo.NUM_ELE
+
 def init_designparams(particals,in_min,in_max):
     if glo.type == 'ti':
         in_dim = len(in_max)   
         solution = np.zeros((1, 6))
-        solution[0, 0] = 0.5 + glo.prior[4]/75
-        solution[0, 1] = 0.5 - glo.prior[4]/75
-        solution[0, 2] = glo.prior[0] / 74
-        solution[0, 3] = glo.prior[1] / 74
-        solution[0, 4] = glo.prior[2] / 74
-        solution[0, 5] = glo.prior[3] / 74
+        solution[0, 0] = 0.5 + glo.prior[4]/NUM_ELE
+        solution[0, 1] = 0.5 - glo.prior[4]/NUM_ELE
+        solution[0, 2] = glo.prior[0] / (NUM_ELE-1)
+        solution[0, 3] = glo.prior[1] / (NUM_ELE-1)
+        solution[0, 4] = glo.prior[2] / (NUM_ELE-1)
+        solution[0, 5] = glo.prior[3] / (NUM_ELE-1)
         print(solution)
         solution=np.repeat(solution, 5, axis=0)
         in_temp = np.random.uniform(-5, 5, (particals-5, in_dim))
@@ -29,10 +31,10 @@ def init_designparams(particals,in_min,in_max):
         solution[glo.prior[1]] = 1
         solution[glo.prior[2]] = -1
         solution[glo.prior[3]] = -1
-        solution[glo.prior[0]+75] = 1
-        solution[glo.prior[1]+75] = 1
-        solution[glo.prior[2]+75] = -1
-        solution[glo.prior[3]+75] = -1
+        solution[glo.prior[0]+NUM_ELE] = 1
+        solution[glo.prior[1]+NUM_ELE] = 1
+        solution[glo.prior[2]+NUM_ELE] = -1
+        solution[glo.prior[3]+NUM_ELE] = -1
         print(solution)
         solution=np.repeat([solution], 5, axis=0)
         in_temp = np.random.uniform(-9, 9, (particals-5, in_dim))
@@ -44,7 +46,7 @@ def init_designparams(particals,in_min,in_max):
         in_dim = len(in_max)     #输入参数维度
         print(in_dim)
         print(glo.prior)
-        solution = np.zeros(75)
+        solution = np.zeros(NUM_ELE)
         solution[glo.prior[0]] = 1
         solution[glo.prior[1]] = 1
         solution[glo.prior[2]] = -1
