@@ -2,7 +2,7 @@ import numpy as np
 from public import glo
 import geatpy as ea
 from public import util
-
+NUM_ELE = glo.NUM_ELE
 
 class MyProblem(ea.Problem): 
 
@@ -14,7 +14,7 @@ class MyProblem(ea.Problem):
         Dim = 4  
         varTypes = [1] * Dim  
         lb = [0, 0,0,0]  
-        ub = [74, 74,74,74]  
+        ub = [(NUM_ELE-1), (NUM_ELE-1),(NUM_ELE-1),(NUM_ELE-1)]  
         lbin = [1] * Dim  
         ubin = [1] * Dim  
 
