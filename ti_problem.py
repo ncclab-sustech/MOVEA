@@ -8,7 +8,7 @@ class MyProblem(ea.Problem):
         name = 'MyProblem'  
         M = 1  
         maxormins = [1] 
-        self.var_set = np.arange(0,75,1) 
+        self.var_set = np.arange(0,NUM_ELE,1) 
         Dim = 5  
         varTypes = [1] * Dim  
         lb = [0, 0, 0, 0, 0]  
