@@ -188,7 +188,7 @@ def mti_avoid(x):
 def tdcs_function(s):
     s[abs(s[:]) < 0.01] = 0
     eam = ((np.matmul(lfm[:, :, 0].T, s)) ** 2 + (np.matmul(lfm[:, :, 1].T, s)) ** 2 + (
-        np.matmul(lfm[:, :, 2].T, s)) ** 2) ** 0.5
+        np.matmul(lfm[:, :, 2].T, s)) ** 2) ** 0.5 /1000
     return np.array([1 / np.average(np.abs(eam[TARGET_POSITION])), np.mean(eam)])  
 
 def tdcs_function1(x):
