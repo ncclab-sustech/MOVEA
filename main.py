@@ -115,8 +115,8 @@ min_ = Boundary[1]
 print("start")
 mopso_ = Mopso(particals, max_, min_, thresh, mesh_div)  
 pareto_in, pareto_fitness = mopso_.done(cycle_)  
-path_fitness = "./output/pareto_fitness_" + args.name + ".txt"
-path_in = "./output/pareto_in_" + args.name + ".txt"
+path_fitness = "./pareto_fitness_" + args.name + ".txt"
+path_in = "./pareto_in_" + args.name + ".txt"
 
 if args.type == 'ti':
     fp = open(path_in,'w+')
