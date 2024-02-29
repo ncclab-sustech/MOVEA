@@ -121,7 +121,7 @@ path_in = "./pareto_in_" + args.name + ".txt"
 if args.type == 'ti':
     fp = open(path_in,'w+')
     for solution in (pareto_in):
-        result = ' '.join([str(elem) for elem in [int(round(solution[2] * (NUM_ELE-1))),2 * solution[0],int(round(solution[3] * (NUM_ELE-1))),2 * solution[0],int(round(solution[4] * (NUM_ELE-1))),-2 * solution[1],int(round(solution[5] * (NUM_ELE-1))),-2 * solution[1]]])
+        result = ' '.join([str(elem) for elem in [int(round(solution[2] * (NUM_ELE-1))),2 * solution[0],int(round(solution[3] * (NUM_ELE-1))),2 * solution[0],int(round(solution[4] * (NUM_ELE-1))),-2 * solution[1],int(round(solution[5] * (NUM_ELE-1))),-2 * solution[1]]]) + '\n'
         fp.write(result)
     fp.close()
 else: 
