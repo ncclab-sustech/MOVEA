@@ -99,7 +99,36 @@ def tis_constraint6(x):
     else:
         return False
 
+def envelop2(e1, e2):
+    # print(e1.shape)
+    mag_e1 = np.abs(e1)
+    mag_e2 = np.abs(e2)
+    index = np.where(mag_e1<=mag_e2)
+
+    return 2 * np.where(mag_e1 <= mag_e2, e1,e2)
+    
 def tis_function6(x):
+
+    electrode1 = int(round(x[2] * (NUM_ELE-1)))
+    electrode2 = int(round(x[3] * (NUM_ELE-1)))
+    stimulation1 = np.zeros(NUM_ELE)
+    stimulation1[electrode1] = 2 * x[0] 
+    stimulation1[electrode2] = -(2 * x[0])
+    
+    electrode3 = int(round(x[4] * (NUM_ELE-1)))
+    electrode4 = int(round(x[5] * (NUM_ELE-1)))
+    stimulation2 = np.zeros(NUM_ELE)
+    stimulation2[electrode3] = 2 * x[1]
+    stimulation2[electrode4] = -(2 * x[1])   
+
+    ex = envelop2(np.array([np.matmul(lfm[:, :, 0].T, stimulation1)]).T,np.array([np.matmul(lfm[:, :, 0].T, stimulation2)]).T) /1000
+    ey = envelop2(np.array([np.matmul(lfm[:, :, 1].T, stimulation1)]).T,np.array([np.matmul(lfm[:, :, 1].T, stimulation2)]).T) /1000
+    ez = envelop2(np.array([np.matmul(lfm[:, :, 2].T, stimulation1)]).T,np.array([np.matmul(lfm[:, :, 2].T, stimulation2)]).T) /1000
+
+    eam =  (ex**2+ey**2+ez**2)**0.5 
+    return  np.array([1 / np.average(np.abs(eam[TARGET_POSITION])), np.mean(eam)])  
+    
+def tis_function6_x(x):
 
     electrode1 = int(round(x[2] * (NUM_ELE-1)))
     electrode2 = int(round(x[3] * (NUM_ELE-1)))
