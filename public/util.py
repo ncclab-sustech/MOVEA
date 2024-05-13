@@ -69,6 +69,22 @@ def envelop(e1,e2):
     eam[mask5 & ~mask4] = 2 * np.linalg.norm(np.cross(e1[mask5 & ~mask4], (e2[mask5 & ~mask4] - e1[mask5 & ~mask4])), axis=1) / np.linalg.norm(e2[mask5 & ~mask4] - e1[mask5 & ~mask4], axis=1)
    
     return eam
+
+
+def magnitude_modulation(ea, eb, size=5):
+    max_em_brain = np.zeros(ea.shape[0])
+    dot_product = np.einsum('ij,ij->i', ea, eb)
+    norm_a = np.linalg.norm(ea, axis=1)
+    norm_b = np.linalg.norm(eb, axis=1)
+    phi_rad = np.arccos(dot_product / (norm_a * norm_b))
+    phi = np.degrees(phi_rad)
+    for alpha in range(0, 360, size):
+        em = envelop2(np.nan_to_num(norm_a * np.abs(np.cos(np.deg2rad(alpha))), nan=0.),
+                      np.nan_to_num(norm_b * np.abs(np.cos(np.deg2rad(alpha - phi))), nan=0.))
+        max_em_brain = np.where(max_em_brain < em, em, max_em_brain)
+    return max_em_brain
+
+
 # max intensity for stage one
 def tis_function5(x1, x2, x3, x4,x5):
 
@@ -77,7 +93,6 @@ def tis_function5(x1, x2, x3, x4,x5):
     stimulation1 = np.zeros(NUM_ELE)
     stimulation1[electrode1] = 1 + x5/NUM_ELE
     stimulation1[electrode2] = -1 - x5/NUM_ELE
-    e1 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation1), np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation1),np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation1)]).T /1000
 
     electrode3 = x3
     electrode4 = x4
@@ -85,9 +100,16 @@ def tis_function5(x1, x2, x3, x4,x5):
 
     stimulation2[electrode3] = 1 - x5/NUM_ELE
     stimulation2[electrode4] = -1 + x5/NUM_ELE
-    e2 = np.array([np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation2), np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation2),np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation2)]).T / 1000
-    eam = envelop(e1,e2)
-    return 1/np.mean(abs(eam)) 
+    ex1 = np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation1)
+    ex2 = np.matmul(lfm[:, TARGET_POSITION, 0].T, stimulation2)
+    ey1 = np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation1)
+    ey2 = np.matmul(lfm[:, TARGET_POSITION, 1].T, stimulation2)
+    ez1 = np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation1)
+    ez2 = np.matmul(lfm[:, TARGET_POSITION, 2].T, stimulation2)
+    ea = np.array([ex1, ey1, ez1]).T / 1000
+    eb = np.array([ex2, ey2, ez2]).T / 1000
+    max_em_brain = magnitude_modulation(ea, eb)
+    return 1 / np.average(max_em_brain)
 
 
 # safe constaints for tis
@@ -119,14 +141,19 @@ def tis_function6(x):
     electrode4 = int(round(x[5] * (NUM_ELE-1)))
     stimulation2 = np.zeros(NUM_ELE)
     stimulation2[electrode3] = 2 * x[1]
-    stimulation2[electrode4] = -(2 * x[1])   
+    stimulation2[electrode4] = -(2 * x[1])
 
-    ex = envelop2(np.array([np.matmul(lfm[:, :, 0].T, stimulation1)]).T,np.array([np.matmul(lfm[:, :, 0].T, stimulation2)]).T) /1000
-    ey = envelop2(np.array([np.matmul(lfm[:, :, 1].T, stimulation1)]).T,np.array([np.matmul(lfm[:, :, 1].T, stimulation2)]).T) /1000
-    ez = envelop2(np.array([np.matmul(lfm[:, :, 2].T, stimulation1)]).T,np.array([np.matmul(lfm[:, :, 2].T, stimulation2)]).T) /1000
+    ex1 = np.matmul(lfm[:, :, 0].T, stimulation1)
+    ex2 = np.matmul(lfm[:, :, 0].T, stimulation2)
+    ey1 = np.matmul(lfm[:, :, 1].T, stimulation1)
+    ey2 = np.matmul(lfm[:, :, 1].T, stimulation2)
+    ez1 = np.matmul(lfm[:, :, 2].T, stimulation1)
+    ez2 = np.matmul(lfm[:, :, 2].T, stimulation2)
+    ea = np.array([ex1, ey1, ez1]).T / 1000
+    eb = np.array([ex2, ey2, ez2]).T / 1000
+    max_em_brain = magnitude_modulation(ea, eb)
+    return np.array([1 / np.average(max_em_brain[TARGET_POSITION]), np.mean(max_em_brain)])
 
-    eam =  (ex**2+ey**2+ez**2)**0.5 
-    return  np.array([1 / np.average(np.abs(eam[TARGET_POSITION])), np.mean(eam)])  
     
 def tis_function6_x(x):
 
