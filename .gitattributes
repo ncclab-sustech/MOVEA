@@ -1,0 +1,4 @@
+data/* filter=lfs diff=lfs merge=lfs -text
+data/lfm_hcp4.npy filter=lfs diff=lfs merge=lfs -text
+data/pos_hcp4.npy filter=lfs diff=lfs merge=lfs -text
+data/m2m.nii.gz filter=lfs diff=lfs merge=lfs -text
