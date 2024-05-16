@@ -1,3 +1,3 @@
 position = 'hippo'
 model = 'ernie'
-NUM_ELE = 20
+NUM_ELE = 75

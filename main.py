@@ -22,6 +22,7 @@ def myargs():
     parser.add_argument('--position', '-p', default='hippo', help='target location')
     parser.add_argument('--head', '-m', default='ernie', help='head model name')
     parser.add_argument('--gen', '-g', default= 0 , help='max epochs')
+    parser.add_argument('--m2m', '-f', default="", help='m2m file path')
     #parser.add_argument('--input', '-o', default= os.path.abspath(os.path.dirname(__file__))+'/data' , help='input path')
     #parser.add_argument('--output', '-o', default= os.path.abspath(os.path.dirname(__file__)) , help='output path')
     args = parser.parse_args()
@@ -69,6 +70,7 @@ elif args.type == 'tdcs':
     problem = MyProblem()
 else:
     print('ERROR: STIMULATION TYPE')
+    sys.exit(1)
 gen = 50
 if int(args.gen) != 0:
     gen = int(args.gen)
@@ -114,7 +116,7 @@ min_ = Boundary[1]
 
 print("start")
 mopso_ = Mopso(particals, max_, min_, thresh, mesh_div)  
-pareto_in, pareto_fitness = mopso_.done(cycle_)  
+pareto_in, pareto_fitness = mopso_.done(cycle_)
 path_fitness = "./pareto_fitness_" + args.name + ".txt"
 path_in = "./pareto_in_" + args.name + ".txt"
 
@@ -124,9 +126,17 @@ if args.type == 'ti':
         result = ' '.join([str(elem) for elem in [int(round(solution[2] * (NUM_ELE-1))),2 * solution[0],int(round(solution[3] * (NUM_ELE-1))),2 * solution[0],int(round(solution[4] * (NUM_ELE-1))),-2 * solution[1],int(round(solution[5] * (NUM_ELE-1))),-2 * solution[1]]]) + '\n'
         fp.write(result)
     fp.close()
-else: 
-    np.savetxt(path_in, pareto_in) 
-np.savetxt(path_fitness, pareto_fitness)  
+else:
+    np.savetxt(path_in, pareto_in)
+np.savetxt(path_fitness, pareto_fitness)
 print("\n", "pareto_position:" + path_in)
 print("pareto_value:" + path_fitness)
 print("\n,over")
+
+if args.m2m:
+    glo.m2m = args.m2m
+    from visualization import visual
+    with open(path_in, 'r') as file:
+        for i, line in enumerate(file):
+            arr = np.array(line.strip().split(' '))
+            visual(arr, i, args.type)
