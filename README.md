@@ -46,7 +46,7 @@ python main.py -t ti -m hcp4 -p motor -f '/path/to/your/m2m'
 The electric field files and images will be outputted in the `results` folder.
 
 ## Citation
-If you find this code useful for your research, please consider citing the following paper: [https://doi.org/10.48550/arXiv.2211.05658](https://doi.org/10.1016/j.neuroimage.2023.120331)
+If you find this code useful for your research, please consider citing the following paper: https://doi.org/10.1016/j.neuroimage.2023.120331.
 
 ## Contact
 We provide some results from the paper in 'others', for any questions or issues related to this implementation, please contact the authors.
