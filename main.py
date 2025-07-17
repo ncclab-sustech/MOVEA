@@ -22,6 +22,7 @@ def myargs():
     parser.add_argument('--position', '-p', default='hippo', help='target location')
     parser.add_argument('--head', '-m', default='ernie', help='head model name')
     parser.add_argument('--gen', '-g', default= 0 , help='max epochs')
+    parser.add_argument('--gen2', '-g2', default= 100 , help='stage2 max epochs')
     parser.add_argument('--m2m', '-f', default="", help='m2m file path')
     #parser.add_argument('--input', '-o', default= os.path.abspath(os.path.dirname(__file__))+'/data' , help='input path')
     #parser.add_argument('--output', '-o', default= os.path.abspath(os.path.dirname(__file__)) , help='output path')
@@ -102,7 +103,7 @@ from Mopso import *
 from public import P_objective
 
 particals = 100  # size of population 
-cycle_ = 100  # iteration2
+cycle_ = args.gen2  # iteration2
 mesh_div = 10  # grid parameter
 thresh = 100  # size of archive
 
